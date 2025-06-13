@@ -12,6 +12,7 @@ final class TrackersViewController: UIViewController {
     private var largeTitleLabel = UILabel()
     private var plusButton = UIButton()
     var categories: [TrackerCategory] = []
+    var completedTrackers: [TrackerRecord] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
