@@ -27,6 +27,7 @@ final class TrackersViewController: UIViewController {
         
         addLargeTitleLabel()
         addPlusButton()
+        addDatePicker()
     }
     
     private func addLargeTitleLabel() {
@@ -50,7 +51,7 @@ final class TrackersViewController: UIViewController {
         plusButton = UIButton.systemButton(
             with: plusImage,
             target: self,
-            action: #selector(Self.didTapPlusButton)
+            action: #selector(Self.addTracker)
         )
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: plusButton)
         view.addSubview(plusButton)
@@ -64,7 +65,7 @@ final class TrackersViewController: UIViewController {
         ])
     }
     
-    @objc private func didTapPlusButton() {
+    @objc private func addTracker() {
         
     }
     
@@ -77,16 +78,16 @@ final class TrackersViewController: UIViewController {
         let calendar = Calendar.current
         let minDate = calendar.date(byAdding: .year, value: -10, to: currentDate)
         let maxDate = calendar.date(byAdding: .year, value: 10, to: currentDate)
-        plusButton.tintColor = .ypBlue
+        datePicker.tintColor = .ypBlue
         datePicker.minimumDate = minDate
         datePicker.maximumDate = maxDate
         datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
         datePicker.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             datePicker.heightAnchor.constraint(equalToConstant: 34),
-            datePicker.widthAnchor.constraint(equalToConstant: 34),
+            datePicker.widthAnchor.constraint(equalToConstant: 77),
             datePicker.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            datePicker.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5)
+            datePicker.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5),
         ])
     }
     
