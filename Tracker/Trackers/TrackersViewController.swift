@@ -87,7 +87,7 @@ final class TrackersViewController: UIViewController {
             datePicker.heightAnchor.constraint(equalToConstant: 34),
             datePicker.widthAnchor.constraint(equalToConstant: 77),
             datePicker.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            datePicker.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5),
+            datePicker.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5)
         ])
     }
     
