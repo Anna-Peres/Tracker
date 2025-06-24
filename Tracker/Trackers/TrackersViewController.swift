@@ -20,6 +20,7 @@ final class TrackersViewController: UIViewController {
     
     var categories: [TrackerCategory] = []
     var completedTrackers: [TrackerRecord] = []
+    private let newHabitViewController = NewHabitViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +52,7 @@ final class TrackersViewController: UIViewController {
         plusButton = UIButton.systemButton(
             with: plusImage,
             target: self,
-            action: #selector(Self.addTracker)
+            action: #selector(Self.didTapPlusButton)
         )
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: plusButton)
         view.addSubview(plusButton)
@@ -65,8 +66,9 @@ final class TrackersViewController: UIViewController {
         ])
     }
     
-    @objc private func addTracker() {
-        
+    @objc private func didTapPlusButton() {
+        newHabitViewController.modalPresentationStyle = .pageSheet
+        self.present(newHabitViewController, animated: true)
     }
     
     private func addDatePicker() {
