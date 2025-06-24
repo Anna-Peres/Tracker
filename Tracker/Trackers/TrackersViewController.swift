@@ -9,8 +9,15 @@ import UIKit
 
 final class TrackersViewController: UIViewController {
     
+    //MARK: UI elements
+    
     private var largeTitleLabel = UILabel()
     private var plusButton = UIButton()
+    private var datePicker = UIDatePicker()
+//    private var trackers = UICollectionView()
+    
+    //MARK: Services
+    
     var categories: [TrackerCategory] = []
     var completedTrackers: [TrackerRecord] = []
     
@@ -23,7 +30,6 @@ final class TrackersViewController: UIViewController {
     }
     
     private func addLargeTitleLabel() {
-        print("Заголовок")
         largeTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(largeTitleLabel)
         let largeTitleLabelStrokeTextAttributes = [
@@ -46,6 +52,7 @@ final class TrackersViewController: UIViewController {
             target: self,
             action: #selector(Self.didTapPlusButton)
         )
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: plusButton)
         view.addSubview(plusButton)
         plusButton.tintColor = .ypBlack
         plusButton.translatesAutoresizingMaskIntoConstraints = false
@@ -58,6 +65,36 @@ final class TrackersViewController: UIViewController {
     }
     
     @objc private func didTapPlusButton() {
-
+        
+    }
+    
+    private func addDatePicker() {
+        view.addSubview(datePicker)
+        datePicker.datePickerMode = .date
+        datePicker.preferredDatePickerStyle = .compact
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: datePicker)
+        let currentDate = Date()
+        let calendar = Calendar.current
+        let minDate = calendar.date(byAdding: .year, value: -10, to: currentDate)
+        let maxDate = calendar.date(byAdding: .year, value: 10, to: currentDate)
+        plusButton.tintColor = .ypBlue
+        datePicker.minimumDate = minDate
+        datePicker.maximumDate = maxDate
+        datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
+        datePicker.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            datePicker.heightAnchor.constraint(equalToConstant: 34),
+            datePicker.widthAnchor.constraint(equalToConstant: 34),
+            datePicker.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            datePicker.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5)
+        ])
+    }
+    
+    @objc func datePickerValueChanged(_ sender: UIDatePicker) {
+        let selectedDate = sender.date
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.yyyy"
+        let formattedDate = dateFormatter.string(from: selectedDate)
+        print("Выбранная дата: \(formattedDate)")
     }
 }
