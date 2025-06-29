@@ -6,10 +6,6 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		ADBB61B52E0AFFC9000FDC68 /* NewHabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBB61B42E0AFFC6000FDC68 /* NewHabitViewController.swift */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXContainerItemProxy section */
 		ADF900672DE2008100C64733 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -28,7 +24,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		ADBB61B42E0AFFC6000FDC68 /* NewHabitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHabitViewController.swift; sourceTree = "<group>"; };
 		ADF900502DE2007E00C64733 /* Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADF900662DE2008100C64733 /* TrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADF900702DE2008100C64733 /* TrackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrackerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -93,7 +88,6 @@
 		ADF900472DE2007E00C64733 = {
 			isa = PBXGroup;
 			children = (
-				ADBB61B42E0AFFC6000FDC68 /* NewHabitViewController.swift */,
 				ADF900522DE2007E00C64733 /* Tracker */,
 				ADF900692DE2008100C64733 /* TrackerTests */,
 				ADF900732DE2008100C64733 /* TrackerUITests */,
@@ -255,7 +249,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ADBB61B52E0AFFC9000FDC68 /* NewHabitViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

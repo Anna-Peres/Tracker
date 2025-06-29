@@ -39,7 +39,9 @@ final class TrackersViewController: UIViewController {
             NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 34),
         ]
         
-        largeTitleLabel.attributedText = NSMutableAttributedString(string: "Трекеры", attributes: largeTitleLabelStrokeTextAttributes)
+        largeTitleLabel.attributedText = NSMutableAttributedString(
+            string: "Трекеры",
+            attributes: largeTitleLabelStrokeTextAttributes)
         
         NSLayoutConstraint.activate([
             largeTitleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 44),
