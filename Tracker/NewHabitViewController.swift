@@ -16,7 +16,6 @@ final class NewHabitViewController: UIViewController {
     private var createButton = UIButton()
     
     private let sheduleViewController = SheduleViewController()
-    private let trackersViewController = TrackersViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -122,8 +121,7 @@ final class NewHabitViewController: UIViewController {
     }
     
     @objc private func didTapCancelButton () {
-        trackersViewController.modalPresentationStyle = .fullScreen
-        self.present(trackersViewController, animated: true)
+        self.dismiss(animated: true)
     }
     
     private func addCreateButton() {
