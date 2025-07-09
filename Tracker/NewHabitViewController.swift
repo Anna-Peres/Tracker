@@ -10,8 +10,6 @@ import UIKit
 final class NewHabitViewController: UIViewController {
     private var titleLabel = UILabel()
     private var textField = UITextField()
-    //    private var categoryButton = UIButton()
-    //    private var sheduleButton = UIButton()
     private var cancelButton = UIButton()
     private var createButton = UIButton()
     private var tableView = UITableView()
@@ -25,8 +23,6 @@ final class NewHabitViewController: UIViewController {
         addTitleLabel()
         addTextField()
         addTableView()
-        //        addCategoryButton()
-        //        addSheduleButton()
         addCancelButton()
         addCreateButton()
     }
@@ -64,51 +60,6 @@ final class NewHabitViewController: UIViewController {
         ])
     }
     
-    //    private func addCategoryButton() {
-    //        view.addSubview(categoryButton)
-    //        categoryButton.translatesAutoresizingMaskIntoConstraints = false
-    //        categoryButton.setTitle("Категория", for: .normal)
-    //        categoryButton.setTitleColor(.ypBlack, for: .normal)
-    //        categoryButton.titleLabel?.textAlignment = .right
-    //        categoryButton.titleLabel?.font = .systemFont(ofSize: 17)
-    //        categoryButton.contentHorizontalAlignment = .left
-    //        categoryButton.backgroundColor = .background
-    //        categoryButton.addTarget(self, action: #selector (didTapCategoryButton), for: UIControl.Event.touchUpInside)
-    //        NSLayoutConstraint.activate([
-    //            categoryButton.heightAnchor.constraint(equalToConstant: 75),
-    //            categoryButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 186),
-    //            categoryButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-    //            categoryButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
-    //        ])
-    //    }
-    //
-    //    @objc private func didTapCategoryButton() {
-    //
-    //    }
-    
-    //    private func addSheduleButton() {
-    //        view.addSubview(sheduleButton)
-    //        sheduleButton.translatesAutoresizingMaskIntoConstraints = false
-    //        sheduleButton.setTitle("Расписание", for: .normal)
-    //        sheduleButton.setTitleColor(.ypBlack, for: .normal)
-    //        sheduleButton.titleLabel?.font = .systemFont(ofSize: 17)
-    //        sheduleButton.contentHorizontalAlignment = .left
-    //        sheduleButton.backgroundColor = .background
-    //        sheduleButton.addTarget(self, action: #selector (didTapSheduleButton), for: UIControl.Event.touchUpInside)
-    //
-    //
-    //        NSLayoutConstraint.activate([
-    //            sheduleButton.heightAnchor.constraint(equalToConstant: 75),
-    //            sheduleButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 261),
-    //            sheduleButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-    //            sheduleButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
-    //        ])
-    //    }
-    
-    //    @objc private func didTapSheduleButton() {
-    //        sheduleViewController.modalPresentationStyle = .pageSheet
-    //        self.present(sheduleViewController, animated: true)
-    //    }
     private func addTableView() {
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
