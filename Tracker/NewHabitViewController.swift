@@ -79,7 +79,7 @@ final class NewHabitViewController: UIViewController {
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
         cancelButton.setTitle("Отменить", for: .normal)
         cancelButton.setTitleColor(.ypRed, for: .normal)
-        cancelButton.titleLabel?.font = .systemFont(ofSize: 16)
+        cancelButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         cancelButton.layer.borderColor = UIColor.ypRed.cgColor
         cancelButton.layer.borderWidth = 1
         cancelButton.layer.cornerRadius = 16
@@ -101,7 +101,7 @@ final class NewHabitViewController: UIViewController {
         createButton.translatesAutoresizingMaskIntoConstraints = false
         createButton.setTitle("Создать", for: .normal)
         createButton.setTitleColor(.ypWhite, for: .normal)
-        createButton.titleLabel?.font = .systemFont(ofSize: 16)
+        createButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         createButton.backgroundColor = .ypGray
         createButton.layer.cornerRadius = 16
         createButton.addTarget(self, action: #selector (didTapCreateButton), for: UIControl.Event.touchUpInside)
@@ -136,12 +136,14 @@ extension NewHabitViewController: UITableViewDataSource {
         cell.accessoryType = .disclosureIndicator
         cell.backgroundColor = .background
         cell.heightAnchor.constraint(equalToConstant: 75).isActive = true
+        cell.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         return cell
     }
 }
 
 extension NewHabitViewController: UITableViewDelegate {
     func tableView( _ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         let indexPath = indexPath.row
         if indexPath == 0 {
             
