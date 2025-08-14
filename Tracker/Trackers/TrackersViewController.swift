@@ -14,6 +14,8 @@ final class TrackersViewController: UIViewController {
     private var largeTitleLabel = UILabel()
     private var plusButton = UIButton()
     private var datePicker = UIDatePicker()
+    private var stubImageView = UIImageView()
+    private var stubLabel = UILabel()
 //    private var trackers = UICollectionView()
     
     //MARK: Services
@@ -29,6 +31,8 @@ final class TrackersViewController: UIViewController {
         addLargeTitleLabel()
         addPlusButton()
         addDatePicker()
+        addStubImage()
+        addStubLabel()
     }
     
     private func addLargeTitleLabel() {
@@ -65,6 +69,37 @@ final class TrackersViewController: UIViewController {
             plusButton.widthAnchor.constraint(equalToConstant: 19),
             plusButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 18),
             plusButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 13)
+        ])
+    }
+    
+    private func addStubImage() {
+        guard let stubImage = UIImage(named: "Stub_image") else { return }
+        stubImageView = UIImageView(image: stubImage)
+        view.addSubview(stubImageView)
+        stubImageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            stubImageView.heightAnchor.constraint(equalToConstant: 80),
+            stubImageView.widthAnchor.constraint(equalToConstant: 80),
+            stubImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stubImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
+    
+    private func addStubLabel() {
+        stubLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(stubLabel)
+        let stubLabelStrokeTextAttributes = [
+            NSAttributedString.Key.foregroundColor : UIColor.ypBlack,
+            NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .medium),
+        ]
+        
+        stubLabel.attributedText = NSMutableAttributedString(
+            string: "Что будем отслеживать?",
+            attributes: stubLabelStrokeTextAttributes)
+        
+        NSLayoutConstraint.activate([
+            stubLabel.topAnchor.constraint(equalTo: stubImageView.bottomAnchor, constant: 8),
+            stubLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
     
