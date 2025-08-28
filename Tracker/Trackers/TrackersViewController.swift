@@ -14,6 +14,7 @@ final class TrackersViewController: UIViewController {
     private var largeTitleLabel = UILabel()
     private var plusButton = UIButton()
     private var datePicker = UIDatePicker()
+    private var textField = UITextField()
     private var stubImageView = UIImageView()
     private var stubLabel = UILabel()
     private let collectionView: UICollectionView = {
@@ -39,6 +40,7 @@ final class TrackersViewController: UIViewController {
         addLargeTitleLabel()
         addPlusButton()
         addDatePicker()
+        addTextField()
         addCollectionView()
     }
     
@@ -145,12 +147,27 @@ final class TrackersViewController: UIViewController {
         print("Выбранная дата: \(formattedDate)")
     }
     
+    private func addTextField() {
+        view.addSubview(textField)
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.placeholder = "Поиск"
+        textField.backgroundColor = .background
+        textField.borderStyle = .roundedRect
+        textField.layer.cornerRadius = 16
+        NSLayoutConstraint.activate([
+            textField.heightAnchor.constraint(equalToConstant: 36),
+            textField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 92),
+            textField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            textField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
+        ])
+    }
+    
     private func addCollectionView() {
         if completedTrackers.count == 0 {
             collectionView.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(collectionView)
             NSLayoutConstraint.activate([
-                collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 192),
+                collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 162),
                 collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
                 collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
                 collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),

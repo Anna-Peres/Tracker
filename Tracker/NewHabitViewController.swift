@@ -51,6 +51,7 @@ final class NewHabitViewController: UIViewController {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Введите название трекера"
         textField.backgroundColor = .background
+        textField.borderStyle = .roundedRect
         textField.layer.cornerRadius = 16
         NSLayoutConstraint.activate([
             textField.heightAnchor.constraint(equalToConstant: 75),
