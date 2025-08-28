@@ -16,7 +16,15 @@ final class TrackersViewController: UIViewController {
     private var datePicker = UIDatePicker()
     private var stubImageView = UIImageView()
     private var stubLabel = UILabel()
-//    private var trackers = UICollectionView()
+    private let collectionView: UICollectionView = {
+        let collectionView = UICollectionView(
+            frame: .zero,
+            collectionViewLayout: UICollectionViewFlowLayout()
+        )
+        collectionView.register(TrackerCollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+        return collectionView
+    }()
+    
     
     //MARK: Services
     
@@ -31,8 +39,7 @@ final class TrackersViewController: UIViewController {
         addLargeTitleLabel()
         addPlusButton()
         addDatePicker()
-        addStubImage()
-        addStubLabel()
+        addCollectionView()
     }
     
     private func addLargeTitleLabel() {
@@ -136,5 +143,62 @@ final class TrackersViewController: UIViewController {
         dateFormatter.dateFormat = "dd.MM.yyyy"
         let formattedDate = dateFormatter.string(from: selectedDate)
         print("Выбранная дата: \(formattedDate)")
+    }
+    
+    private func addCollectionView() {
+        if completedTrackers.count == 0 {
+            collectionView.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(collectionView)
+            NSLayoutConstraint.activate([
+                collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 192),
+                collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+                collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+                collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            ])
+            
+            collectionView.dataSource = self
+            collectionView.delegate = self
+            collectionView.backgroundColor = .ypBlue
+        } else {
+            addStubImage()
+            addStubLabel()
+        }
+    }
+}
+
+extension TrackersViewController: UICollectionViewDataSource {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
+        return completedTrackers.count
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! TrackerCollectionViewCell
+        
+//        cell.titleLabel.text = completedTrackers[indexPath.row]
+        return cell
+    }
+}
+
+extension TrackersViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        return CGSize(width: collectionView.bounds.width / 2, height: 148)
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumInteritemSpacingForSectionAt section: Int
+    ) -> CGFloat {
+        return 0
     }
 }

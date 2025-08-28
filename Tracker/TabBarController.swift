@@ -11,6 +11,8 @@ final class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tabBar.backgroundColor = .ypWhite
+        
         let trackersViewController = TrackersViewController()
         trackersViewController.tabBarItem = UITabBarItem(
             title: "Трекеры",
