@@ -10,7 +10,6 @@ import UIKit
 final class TrackersViewController: UIViewController {
     
     //MARK: UI elements
-    
     private var largeTitleLabel = UILabel()
     private var plusButton = UIButton()
     private var datePicker = UIDatePicker()
@@ -26,9 +25,7 @@ final class TrackersViewController: UIViewController {
         return collectionView
     }()
     
-    
     //MARK: Services
-    
     var categories: [TrackerCategory] = []
     var completedTrackers: [TrackerRecord] = []
     private let newHabitViewController = NewHabitViewController()
@@ -163,7 +160,7 @@ final class TrackersViewController: UIViewController {
     }
     
     private func addCollectionView() {
-        if completedTrackers.count == 0 {
+        if completedTrackers.count > 0 {
             collectionView.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(collectionView)
             NSLayoutConstraint.activate([
@@ -175,7 +172,6 @@ final class TrackersViewController: UIViewController {
             
             collectionView.dataSource = self
             collectionView.delegate = self
-            collectionView.backgroundColor = .ypBlue
         } else {
             addStubImage()
             addStubLabel()

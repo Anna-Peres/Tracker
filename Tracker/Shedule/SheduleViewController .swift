@@ -8,11 +8,21 @@
 import UIKit
 
 final class SheduleViewController: UIViewController {
+    //MARK: UI elements
     private var titleLabel = UILabel()
     private var tableView = UITableView()
     private var doneButton = UIButton()
+    private lazy var switchControl: UISwitch = {
+        let switchControl = UISwitch()
+        switchControl.onTintColor = UIColor(resource: .ypBlue)
+        switchControl.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
+        switchControl.translatesAutoresizingMaskIntoConstraints = false
+        return switchControl
+    }()
     
-    private let days = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"]
+    //MARK: Services
+    var selectedDays: [Weekday] = []
+    var onSwitchChanged: ((Bool) -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,14 +82,18 @@ final class SheduleViewController: UIViewController {
         ])
     }
     
+    @objc private func switchChanged(_ sender: UISwitch) {
+        onSwitchChanged?(sender.isOn)
+    }
+    
     @objc private func didTapDoneButton () {
-        
+        self.dismiss(animated: true)
     }
 }
 
 extension SheduleViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return days.count
+        return Weekday.allCases.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -89,7 +103,7 @@ extension SheduleViewController: UITableViewDataSource {
         } else {
             cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
         }
-        cell.textLabel?.text = days[indexPath.row]
+//        cell.textLabel?.text = days[indexPath.row]
         cell.textLabel?.textColor = .ypBlack
         cell.textLabel?.font = .systemFont(ofSize: 17)
         cell.accessoryType = .none
@@ -102,6 +116,17 @@ extension SheduleViewController: UITableViewDataSource {
         groupSwitch.isEnabled = true
         groupSwitch.isUserInteractionEnabled = true
         cell.addSubview(groupSwitch)
+        
+        let weekday = Weekday.allCases[indexPath.row]
+        let isSelected = selectedDays.contains(weekday)
+        
+        self.onSwitchChanged = { [weak self] isOn in
+            if isOn {
+                self?.selectedDays.append(weekday)
+            } else {
+                self?.selectedDays.removeAll { $0 == weekday }
+            }
+        }
         return cell
     }
 }

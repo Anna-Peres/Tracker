@@ -134,6 +134,9 @@ extension NewHabitViewController: UITableViewDataSource {
         cell.textLabel?.text = buttons[indexPath.row]
         cell.textLabel?.textColor = .ypBlack
         cell.textLabel?.font = .systemFont(ofSize: 17)
+        cell.detailTextLabel?.text = "Каждый день"
+        cell.detailTextLabel?.textColor = .ypGray
+        cell.detailTextLabel?.font = .systemFont(ofSize: 17)
         cell.accessoryType = .disclosureIndicator
         cell.backgroundColor = .background
         cell.heightAnchor.constraint(equalToConstant: 75).isActive = true
