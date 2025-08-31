@@ -51,8 +51,11 @@ final class NewHabitViewController: UIViewController {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Введите название трекера"
         textField.backgroundColor = .background
-        textField.borderStyle = .roundedRect
         textField.layer.cornerRadius = 16
+        textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: textField.frame.height))
+        textField.leftViewMode = .always
+        textField.clearButtonMode = .whileEditing
+        textField.returnKeyType = .done
         NSLayoutConstraint.activate([
             textField.heightAnchor.constraint(equalToConstant: 75),
             textField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 87),

@@ -13,7 +13,7 @@ final class TrackersViewController: UIViewController {
     private var largeTitleLabel = UILabel()
     private var plusButton = UIButton()
     private var datePicker = UIDatePicker()
-    private var textField = UITextField()
+    private var searchBar = UISearchBar()
     private var stubImageView = UIImageView()
     private var stubLabel = UILabel()
     private let collectionView: UICollectionView = {
@@ -37,7 +37,7 @@ final class TrackersViewController: UIViewController {
         addLargeTitleLabel()
         addPlusButton()
         addDatePicker()
-        addTextField()
+        addSearchBar()
         addCollectionView()
     }
     
@@ -144,18 +144,19 @@ final class TrackersViewController: UIViewController {
         print("Выбранная дата: \(formattedDate)")
     }
     
-    private func addTextField() {
-        view.addSubview(textField)
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "Поиск"
-        textField.backgroundColor = .background
-        textField.borderStyle = .roundedRect
-        textField.layer.cornerRadius = 16
+    private func addSearchBar() {
+        view.addSubview(searchBar.searchTextField)
+        searchBar.searchBarStyle = .minimal
+        searchBar.placeholder = "Поиск"
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        searchBar.searchTextField.translatesAutoresizingMaskIntoConstraints = false
+        searchBar.searchTextField.backgroundColor = .background
+        searchBar.searchTextField.layer.cornerRadius = 16
         NSLayoutConstraint.activate([
-            textField.heightAnchor.constraint(equalToConstant: 36),
-            textField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 92),
-            textField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            textField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
+            searchBar.searchTextField.heightAnchor.constraint(equalToConstant: 36),
+            searchBar.searchTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 92),
+            searchBar.searchTextField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            searchBar.searchTextField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
         ])
     }
     
