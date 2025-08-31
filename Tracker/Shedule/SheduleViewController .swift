@@ -103,7 +103,7 @@ extension SheduleViewController: UITableViewDataSource {
         } else {
             cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
         }
-//        cell.textLabel?.text = days[indexPath.row]
+        cell.textLabel?.text = Weekday.allCases[indexPath.row].name
         cell.textLabel?.textColor = .ypBlack
         cell.textLabel?.font = .systemFont(ofSize: 17)
         cell.accessoryType = .none
@@ -115,6 +115,7 @@ extension SheduleViewController: UITableViewDataSource {
         let groupSwitch = UISwitch(frame: CGRect(x: rowX, y: 22, width: 51, height: 31))
         groupSwitch.isEnabled = true
         groupSwitch.isUserInteractionEnabled = true
+        groupSwitch.onTintColor = .ypBlue
         cell.addSubview(groupSwitch)
         
         let weekday = Weekday.allCases[indexPath.row]
