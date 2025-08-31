@@ -148,7 +148,6 @@ final class TrackersViewController: UIViewController {
         view.addSubview(searchBar.searchTextField)
         searchBar.searchBarStyle = .minimal
         searchBar.placeholder = "Поиск"
-        searchBar.translatesAutoresizingMaskIntoConstraints = false
         searchBar.searchTextField.translatesAutoresizingMaskIntoConstraints = false
         searchBar.searchTextField.backgroundColor = .background
         searchBar.searchTextField.layer.cornerRadius = 16
