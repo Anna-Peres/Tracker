@@ -173,13 +173,12 @@ extension NewHabitViewController: UITableViewDataSource {
         cell.textLabel?.font = .systemFont(ofSize: 17)
         cell.accessoryType = .disclosureIndicator
         cell.backgroundColor = .background
-        cell.heightAnchor.constraint(equalToConstant: 75).isActive = true
         cell.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         if indexPath.row == 0 {
             cell.textLabel?.text = "Категория"
         } else {
-            let daysText = selectedDays.isEmpty ? nil : selectedDays.map { $0.shortName }.joined(separator: ", ")
-            cell.configure(title: "Расписание", subtitle: daysText)
+            let weekdaysText = selectedDays.isEmpty ? nil : selectedDays.map { $0.shortName }.joined(separator: ", ")
+            cell.configure(title: "Расписание", subtitle: weekdaysText)
         }
         
         return cell

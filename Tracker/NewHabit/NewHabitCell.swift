@@ -54,12 +54,12 @@ final class NewHabitCell: UITableViewCell {
         containerStackView.addArrangedSubview(titleLabel)
         containerStackView.addArrangedSubview(subtitleLabel)
         
-        UIKit.NSLayoutConstraint.activate([
+        NSLayoutConstraint.activate([
             containerStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            containerStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -40),
+            containerStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             containerStackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            containerStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            containerStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
+            containerStackView.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: 16),
+            containerStackView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -16)
         ])
         
         NSLayoutConstraint.activate([

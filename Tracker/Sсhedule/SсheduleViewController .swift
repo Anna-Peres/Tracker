@@ -23,6 +23,7 @@ final class SсheduleViewController: UIViewController {
     //MARK: Services
     var selectedDays: [Weekday] = []
     var onSwitchChanged: ((Bool) -> Void)?
+    var onDaysSelected: (([Weekday]) -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,7 +87,8 @@ final class SсheduleViewController: UIViewController {
         onSwitchChanged?(sender.isOn)
     }
     
-    @objc private func didTapDoneButton () {
+    @objc private func didTapDoneButton() {
+        onDaysSelected?(selectedDays)
         self.dismiss(animated: true)
     }
 }
@@ -116,6 +118,7 @@ extension SсheduleViewController: UITableViewDataSource {
         groupSwitch.isEnabled = true
         groupSwitch.isUserInteractionEnabled = true
         groupSwitch.onTintColor = .ypBlue
+        groupSwitch.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
         cell.addSubview(groupSwitch)
         
         let weekday = Weekday.allCases[indexPath.row]
