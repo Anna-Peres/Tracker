@@ -8,14 +8,20 @@
 import UIKit
 
 final class NewHabitViewController: UIViewController {
+    //MARK: UI elements
     private var titleLabel = UILabel()
     private var textField = UITextField()
+    private var tableView = UITableView()
+    private lazy var containerStackView = UIStackView()
     private var cancelButton = UIButton()
     private var createButton = UIButton()
-    private var tableView = UITableView()
-    
-    private let buttons = ["Категория", "Расписание"]
-    private let sheduleViewController = SheduleViewController()
+
+        
+    //MARK: Services
+    var onSave: ((Tracker, String) -> Void)?
+//    private let buttons = ["Категория", "Расписание"]
+    private let sсheduleViewController = SсheduleViewController()
+    private var selectedDays: [Weekday] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -117,33 +123,65 @@ final class NewHabitViewController: UIViewController {
         ])
     }
     
-    @objc private func didTapCreateButton () {
+    private func updateCreateButtonState() {
+        let isTitleValid = !(textField.text?.isEmpty ?? true)
+        let isScheduleSelected = !selectedDays.isEmpty
         
+        createButton.isEnabled = isTitleValid && isScheduleSelected
+        createButton.backgroundColor = createButton.isEnabled ? UIColor(resource: .ypBlack) : UIColor(resource: .ypGray)
+    }
+    
+    @objc private func textFieldСhanged(_ textField: UITextField) {
+        if let text = textField.text, text.count > 38 {
+            textField.text = String(text.prefix(38))
+        }
+        updateCreateButtonState()
+    }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+    @objc private func didTapCreateButton () {
+        guard let name = textField.text, !name.isEmpty else { return }
+        
+        let newTracker = Tracker(
+            name: name,
+            color: .selection5,
+            emoji: "😪",
+            schedule: selectedDays
+        )
+        
+        onSave?(newTracker, "Важное")
+        dismiss(animated: true)
     }
 }
 
 extension NewHabitViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return buttons.count
+        return 2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell
+        let cell: NewHabitCell
         if let reusedCell = tableView.dequeueReusableCell(withIdentifier: "cell") {
-            cell = reusedCell
+            cell = reusedCell as! NewHabitCell
         } else {
-            cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
+            cell = NewHabitCell(style: .default, reuseIdentifier: "cell")
         }
-        cell.textLabel?.text = buttons[indexPath.row]
         cell.textLabel?.textColor = .ypBlack
         cell.textLabel?.font = .systemFont(ofSize: 17)
-        cell.detailTextLabel?.text = "Каждый день"
-        cell.detailTextLabel?.textColor = .ypGray
-        cell.detailTextLabel?.font = .systemFont(ofSize: 17)
         cell.accessoryType = .disclosureIndicator
         cell.backgroundColor = .background
         cell.heightAnchor.constraint(equalToConstant: 75).isActive = true
         cell.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        if indexPath.row == 0 {
+            cell.textLabel?.text = "Категория"
+        } else {
+            let daysText = selectedDays.isEmpty ? nil : selectedDays.map { $0.shortName }.joined(separator: ", ")
+            cell.configure(title: "Расписание", subtitle: daysText)
+        }
+        
         return cell
     }
 }
@@ -155,8 +193,19 @@ extension NewHabitViewController: UITableViewDelegate {
         if indexPath == 0 {
             
         } else {
-            sheduleViewController.modalPresentationStyle = .pageSheet
-            self.present(sheduleViewController, animated: true)
+            sсheduleViewController.modalPresentationStyle = .pageSheet
+            self.present(sсheduleViewController, animated: true)
         }
+    }
+}
+
+extension NewHabitViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        updateCreateButtonState()
     }
 }

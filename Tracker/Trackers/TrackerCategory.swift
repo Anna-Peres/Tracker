@@ -1,5 +1,5 @@
 //
-//  Untitled.swift
+//  TrackerCategory.swift
 //  Tracker
 //
 //  Created by Анна Перескокова on 04.06.2025.

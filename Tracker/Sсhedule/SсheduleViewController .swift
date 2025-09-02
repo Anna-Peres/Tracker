@@ -1,5 +1,5 @@
 //
-//  NewHabitViewController.swift
+//  SсheduleViewController.swift
 //  Tracker
 //
 //  Created by Анна Перескокова on 24.06.2025.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class SheduleViewController: UIViewController {
+final class SсheduleViewController: UIViewController {
     //MARK: UI elements
     private var titleLabel = UILabel()
     private var tableView = UITableView()
@@ -91,7 +91,7 @@ final class SheduleViewController: UIViewController {
     }
 }
 
-extension SheduleViewController: UITableViewDataSource {
+extension SсheduleViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return Weekday.allCases.count
     }
@@ -132,7 +132,7 @@ extension SheduleViewController: UITableViewDataSource {
     }
 }
 
-extension SheduleViewController: UITableViewDelegate {
+extension SсheduleViewController: UITableViewDelegate {
     func tableView( _ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
     }

@@ -177,6 +177,27 @@ final class TrackersViewController: UIViewController {
             addStubLabel()
         }
     }
+    
+    private func updateCollectonView() {
+        filterTrackers()
+//
+//        let hasData = dateFilteredCategories.contains { !$0.trackers.isEmpty }
+//        collectionView.isHidden = !hasData
+//        
+        collectionView.reloadData()
+    }
+    
+    private func filterTrackers() {
+        let selectedDate = datePicker.date
+        let weekday = Calendar.current.component(.weekday, from: selectedDate)
+        
+        var dateFilteredCategories = categories.map { category in
+            let filteredTrackers = category.trackers.filter { tracker in
+                tracker.schedule.contains { $0.rawValue == weekday }
+            }
+            return TrackerCategory(title: category.title, trackers: filteredTrackers)
+        }
+    }
 }
 
 extension TrackersViewController: UICollectionViewDataSource {
