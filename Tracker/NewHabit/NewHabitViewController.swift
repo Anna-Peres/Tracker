@@ -19,7 +19,6 @@ final class NewHabitViewController: UIViewController {
     
     //MARK: Services
     var onSave: ((Tracker, String) -> Void)?
-    //    private let buttons = ["Категория", "Расписание"]
     private let scheduleViewController = ScheduleViewController()
     private var selectedDays: [Weekday] = []
     
@@ -62,6 +61,7 @@ final class NewHabitViewController: UIViewController {
         textField.leftViewMode = .always
         textField.clearButtonMode = .whileEditing
         textField.returnKeyType = .done
+        textField.addTarget(self, action: #selector(textFieldСhanged), for: .editingChanged)
         NSLayoutConstraint.activate([
             textField.heightAnchor.constraint(equalToConstant: 75),
             textField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 87),
