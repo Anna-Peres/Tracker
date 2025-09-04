@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class SсheduleViewController: UIViewController {
+final class ScheduleViewController: UIViewController {
     //MARK: UI elements
     private var titleLabel = UILabel()
     private var tableView = UITableView()
@@ -81,7 +81,7 @@ final class SсheduleViewController: UIViewController {
     }
 }
 
-extension SсheduleViewController: UITableViewDataSource {
+extension ScheduleViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 7
     }
@@ -113,7 +113,7 @@ extension SсheduleViewController: UITableViewDataSource {
     }
 }
 
-extension SсheduleViewController: UITableViewDelegate {
+extension ScheduleViewController: UITableViewDelegate {
     func tableView( _ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
     }

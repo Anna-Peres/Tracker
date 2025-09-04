@@ -32,7 +32,7 @@ final class ScheduleCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        addUI()
+        addViews()
     }
     
     required init?(coder: NSCoder) {
@@ -44,7 +44,7 @@ final class ScheduleCell: UITableViewCell {
         groupSwitch.isOn = isOn
     }
     
-    private func addUI() {
+    private func addViews() {
         contentView.addSubview(titleLabel)
         contentView.addSubview(groupSwitch)
         

@@ -15,12 +15,12 @@ final class NewHabitViewController: UIViewController {
     private lazy var containerStackView = UIStackView()
     private var cancelButton = UIButton()
     private var createButton = UIButton()
-
-        
+    
+    
     //MARK: Services
     var onSave: ((Tracker, String) -> Void)?
-//    private let buttons = ["Категория", "Расписание"]
-    private let sсheduleViewController = SсheduleViewController()
+    //    private let buttons = ["Категория", "Расписание"]
+    private let scheduleViewController = ScheduleViewController()
     private var selectedDays: [Weekday] = []
     
     override func viewDidLoad() {
@@ -123,7 +123,7 @@ final class NewHabitViewController: UIViewController {
         ])
     }
     
-    private func updateCreateButtonState() {
+    private func updateCreateButton() {
         let isTitleValid = !(textField.text?.isEmpty ?? true)
         let isScheduleSelected = !selectedDays.isEmpty
         
@@ -135,7 +135,7 @@ final class NewHabitViewController: UIViewController {
         if let text = textField.text, text.count > 38 {
             textField.text = String(text.prefix(38))
         }
-        updateCreateButtonState()
+        updateCreateButton()
     }
     
     @objc private func dismissKeyboard() {
@@ -169,8 +169,6 @@ extension NewHabitViewController: UITableViewDataSource {
         } else {
             cell = NewHabitCell(style: .default, reuseIdentifier: "New habit cell")
         }
-        cell.textLabel?.textColor = .ypBlack
-        cell.textLabel?.font = .systemFont(ofSize: 17)
         cell.accessoryType = .disclosureIndicator
         cell.backgroundColor = .background
         cell.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
@@ -192,8 +190,14 @@ extension NewHabitViewController: UITableViewDelegate {
         if indexPath == 0 {
             
         } else {
-            sсheduleViewController.modalPresentationStyle = .pageSheet
-            self.present(sсheduleViewController, animated: true)
+            scheduleViewController.modalPresentationStyle = .pageSheet
+            self.present(scheduleViewController, animated: true)
+            scheduleViewController.selectedDays = selectedDays
+            scheduleViewController.onDaysSelected = { [weak self] weekdays in
+                self?.selectedDays = weekdays
+                tableView.reloadData()
+                self?.updateCreateButton()
+            }
         }
     }
 }
@@ -205,6 +209,6 @@ extension NewHabitViewController: UITextFieldDelegate {
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        updateCreateButtonState()
+        updateCreateButton()
     }
 }
