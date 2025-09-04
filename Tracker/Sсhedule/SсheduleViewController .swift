@@ -9,8 +9,8 @@ import UIKit
 
 final class ScheduleViewController: UIViewController {
     //MARK: UI elements
+    var tableView = UITableView()
     private var titleLabel = UILabel()
-    private var tableView = UITableView()
     private var doneButton = UIButton()
     
     //MARK: Services

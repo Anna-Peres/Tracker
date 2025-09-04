@@ -32,6 +32,14 @@ final class NewHabitViewController: UIViewController {
         addCreateButton()
     }
     
+    func clearFields() {
+        textField.text = nil
+        updateCreateButton()
+        selectedDays = []
+        scheduleViewController.tableView.reloadData()
+        tableView.reloadData()
+    }
+    
     private func addTitleLabel() {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(titleLabel)
@@ -153,7 +161,7 @@ final class NewHabitViewController: UIViewController {
             schedule: selectedDays
         )
         
-        onSave?(newTracker, "Важное")
+        onSave?(newTracker, "Новая категория")
         dismiss(animated: true)
     }
 }

@@ -112,6 +112,7 @@ final class TrackersViewController: UIViewController {
     
     @objc private func didTapPlusButton() {
         newHabitViewController.modalPresentationStyle = .pageSheet
+        newHabitViewController.clearFields()
         self.present(newHabitViewController, animated: true)
         newHabitViewController.onSave = { [weak self] tracker, categoryTitle in
             self?.addTracker(tracker, toCategory: categoryTitle)
@@ -239,7 +240,6 @@ final class TrackersViewController: UIViewController {
         let today = Date()
         
         if selectedDate > today {
-            print("Нельзя отмечать трекеры для будущих дат")
             return
         }
         
@@ -323,7 +323,9 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        return CGSize(width: collectionView.bounds.width / 2, height: 148)
+        let availableWidth = max(0, collectionView.frame.width - 16)
+        let cellWidth = availableWidth / 2
+        return CGSize(width: max(0, cellWidth), height: max(0, 148))
     }
     
     func collectionView(
