@@ -12,17 +12,9 @@ final class SсheduleViewController: UIViewController {
     private var titleLabel = UILabel()
     private var tableView = UITableView()
     private var doneButton = UIButton()
-    private lazy var switchControl: UISwitch = {
-        let switchControl = UISwitch()
-        switchControl.onTintColor = UIColor(resource: .ypBlue)
-        switchControl.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
-        switchControl.translatesAutoresizingMaskIntoConstraints = false
-        return switchControl
-    }()
     
     //MARK: Services
     var selectedDays: [Weekday] = []
-    var onSwitchChanged: ((Bool) -> Void)?
     var onDaysSelected: (([Weekday]) -> Void)?
     
     override func viewDidLoad() {
@@ -83,10 +75,6 @@ final class SсheduleViewController: UIViewController {
         ])
     }
     
-    @objc private func switchChanged(_ sender: UISwitch) {
-        onSwitchChanged?(sender.isOn)
-    }
-    
     @objc private func didTapDoneButton() {
         onDaysSelected?(selectedDays)
         self.dismiss(animated: true)
@@ -95,36 +83,26 @@ final class SсheduleViewController: UIViewController {
 
 extension SсheduleViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Weekday.allCases.count
+        return 7
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell
-        if let reusedCell = tableView.dequeueReusableCell(withIdentifier: "cell") {
-            cell = reusedCell
+        let cell: ScheduleCell
+        if let reusedCell = tableView.dequeueReusableCell(withIdentifier: "Schedule cell") {
+            cell = reusedCell as! ScheduleCell
         } else {
-            cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
+            cell = ScheduleCell(style: .default, reuseIdentifier: "Schedule cell")
         }
-        cell.textLabel?.text = Weekday.allCases[indexPath.row].name
-        cell.textLabel?.textColor = .ypBlack
-        cell.textLabel?.font = .systemFont(ofSize: 17)
         cell.accessoryType = .none
         cell.backgroundColor = .background
         cell.heightAnchor.constraint(equalToConstant: 75).isActive = true
         cell.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
-        guard let window = view.window else { return cell }
-        let rowX = window.frame.width - 99
-        let groupSwitch = UISwitch(frame: CGRect(x: rowX, y: 22, width: 51, height: 31))
-        groupSwitch.isEnabled = true
-        groupSwitch.isUserInteractionEnabled = true
-        groupSwitch.onTintColor = .ypBlue
-        groupSwitch.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
-        cell.addSubview(groupSwitch)
-        
+
         let weekday = Weekday.allCases[indexPath.row]
         let isSelected = selectedDays.contains(weekday)
         
-        self.onSwitchChanged = { [weak self] isOn in
+        cell.configure(with: weekday.name, isOn: isSelected)
+        cell.onSwitchChanged = { [weak self] isOn in
             if isOn {
                 self?.selectedDays.append(weekday)
             } else {

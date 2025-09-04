@@ -164,10 +164,10 @@ extension NewHabitViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: NewHabitCell
-        if let reusedCell = tableView.dequeueReusableCell(withIdentifier: "cell") {
+        if let reusedCell = tableView.dequeueReusableCell(withIdentifier: "New habit cell") {
             cell = reusedCell as! NewHabitCell
         } else {
-            cell = NewHabitCell(style: .default, reuseIdentifier: "cell")
+            cell = NewHabitCell(style: .default, reuseIdentifier: "New habit cell")
         }
         cell.textLabel?.textColor = .ypBlack
         cell.textLabel?.font = .systemFont(ofSize: 17)
