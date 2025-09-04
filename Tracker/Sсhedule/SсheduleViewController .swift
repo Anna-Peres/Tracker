@@ -117,4 +117,27 @@ extension ScheduleViewController: UITableViewDelegate {
     func tableView( _ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 75
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let cornerRadius: CGFloat = 16
+        var maskedCorners: CACornerMask = []
+        let totalRows = tableView.numberOfRows(inSection: indexPath.section)
+        
+        switch indexPath.row {
+        case 0:
+            maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        case totalRows - 1:
+            maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        default:
+            break
+        }
+        
+        cell.layer.maskedCorners = maskedCorners
+        cell.layer.cornerRadius = !maskedCorners.isEmpty ? cornerRadius : 0
+        cell.layer.masksToBounds = !maskedCorners.isEmpty
+    }
 }

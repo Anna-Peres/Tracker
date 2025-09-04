@@ -146,6 +146,7 @@ final class NewHabitViewController: UIViewController {
         guard let name = textField.text, !name.isEmpty else { return }
         
         let newTracker = Tracker(
+            id: UUID(),
             name: name,
             color: .selection5,
             emoji: "😪",
