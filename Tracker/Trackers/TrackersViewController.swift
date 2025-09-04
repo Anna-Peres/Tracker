@@ -16,14 +16,7 @@ final class TrackersViewController: UIViewController {
     private var searchBar = UISearchBar()
     private var stubImageView = UIImageView()
     private var stubLabel = UILabel()
-    private let collectionView: UICollectionView = {
-        let collectionView = UICollectionView(
-            frame: .zero,
-            collectionViewLayout: UICollectionViewFlowLayout()
-        )
-        collectionView.register(TrackerCell.self, forCellWithReuseIdentifier: "Tracker cell")
-        return collectionView
-    }()
+    private var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     //MARK: Services
     var categories: [TrackerCategory] = []
@@ -205,7 +198,8 @@ final class TrackersViewController: UIViewController {
         ])
         collectionView.dataSource = self
         collectionView.delegate = self
-        
+        collectionView.register(TrackerCell.self, forCellWithReuseIdentifier: "Tracker cell")
+        collectionView.register(TrackerSupplementaryView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "Header")
     }
     
     private func updateCollectonView() {
@@ -293,7 +287,6 @@ extension TrackersViewController: UICollectionViewDataSource {
     func collectionView(
         _ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        //        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Tracker cell", for: indexPath) as! TrackerCell
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: "Tracker cell",
             for: indexPath
@@ -315,6 +308,20 @@ extension TrackersViewController: UICollectionViewDataSource {
         
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        var id: String
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            id = "Header"
+        default:
+            id = ""
+        }
+        
+        let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: id, for: indexPath) as! TrackerSupplementaryView
+        view.titleLabel.text = "Новая категория"
+        return view
+    }
 }
 
 extension TrackersViewController: UICollectionViewDelegateFlowLayout {
@@ -335,4 +342,8 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
     ) -> CGFloat {
         return 0
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        CGSize(width: collectionView.frame.width, height: 30)
+       }
 }
