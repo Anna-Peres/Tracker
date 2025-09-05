@@ -25,11 +25,9 @@ final class NewHabitViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .ypWhite
-        addTitleLabel()
-        addTextField()
-        addTableView()
-        addCancelButton()
-        addCreateButton()
+        setupUI()
+        setupGestureRecognizer()
+        tableView.register(NewHabitCell.self, forCellReuseIdentifier: "New habit cell")
     }
     
     func clearFields() {
@@ -38,6 +36,14 @@ final class NewHabitViewController: UIViewController {
         selectedDays = []
         scheduleViewController.tableView.reloadData()
         tableView.reloadData()
+    }
+    
+    private func setupUI() {
+        addTitleLabel()
+        addTextField()
+        addTableView()
+        addCancelButton()
+        addCreateButton()
     }
     
     private func addTitleLabel() {
@@ -146,6 +152,12 @@ final class NewHabitViewController: UIViewController {
         updateCreateButton()
     }
     
+    private func setupGestureRecognizer() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+    }
+    
     @objc private func dismissKeyboard() {
         view.endEditing(true)
     }
@@ -161,7 +173,7 @@ final class NewHabitViewController: UIViewController {
             schedule: selectedDays
         )
         
-        onSave?(newTracker, "Новая категория")
+        onSave?(newTracker, "Важное")
         dismiss(animated: true)
     }
 }
@@ -172,12 +184,7 @@ extension NewHabitViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: NewHabitCell
-        if let reusedCell = tableView.dequeueReusableCell(withIdentifier: "New habit cell") {
-            cell = reusedCell as! NewHabitCell
-        } else {
-            cell = NewHabitCell(style: .default, reuseIdentifier: "New habit cell")
-        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "New habit cell") as! NewHabitCell
         cell.accessoryType = .disclosureIndicator
         cell.backgroundColor = .background
         cell.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)

@@ -27,7 +27,11 @@ final class TrackersViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .ypWhite
-        
+        setupUI()
+        setupGestureRecognizer()
+    }
+    
+    private func setupUI() {
         addLargeTitleLabel()
         addPlusButton()
         addDatePicker()
@@ -40,7 +44,7 @@ final class TrackersViewController: UIViewController {
         view.addSubview(largeTitleLabel)
         let largeTitleLabelStrokeTextAttributes = [
             NSAttributedString.Key.foregroundColor : UIColor.ypBlack,
-            NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 34),
+            NSAttributedString.Key.font : UIFont.systemFont(ofSize: 34, weight: .bold),
         ]
         
         largeTitleLabel.attributedText = NSMutableAttributedString(
@@ -257,6 +261,12 @@ final class TrackersViewController: UIViewController {
         }
     }
     
+    private func setupGestureRecognizer() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+    }
+    
     @objc private func dismissKeyboard() {
         view.endEditing(true)
         searchBar.resignFirstResponder()
@@ -319,7 +329,7 @@ extension TrackersViewController: UICollectionViewDataSource {
         }
         
         let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: id, for: indexPath) as! TrackerSupplementaryView
-        view.titleLabel.text = "Новая категория"
+        view.titleLabel.text = filteredCategories[indexPath.section].title
         return view
     }
 }

@@ -20,6 +20,11 @@ final class ScheduleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .ypWhite
+        setupUI()
+        tableView.register(ScheduleCell.self, forCellReuseIdentifier: "Schedule cell")
+    }
+    
+    private func setupUI() {
         addTitleLabel()
         addTableView()
         addDoneButton()
@@ -87,12 +92,7 @@ extension ScheduleViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: ScheduleCell
-        if let reusedCell = tableView.dequeueReusableCell(withIdentifier: "Schedule cell") {
-            cell = reusedCell as! ScheduleCell
-        } else {
-            cell = ScheduleCell(style: .default, reuseIdentifier: "Schedule cell")
-        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Schedule cell") as! ScheduleCell
         cell.accessoryType = .none
         cell.backgroundColor = .background
         cell.heightAnchor.constraint(equalToConstant: 75).isActive = true
