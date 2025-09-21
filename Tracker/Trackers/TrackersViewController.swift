@@ -16,7 +16,10 @@ final class TrackersViewController: UIViewController {
     private var searchBar = UISearchBar()
     private var stubImageView = UIImageView()
     private var stubLabel = UILabel()
-    private var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private var collectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: UICollectionViewFlowLayout()
+    )
     
     //MARK: Services
     var categories: [TrackerCategory] = []

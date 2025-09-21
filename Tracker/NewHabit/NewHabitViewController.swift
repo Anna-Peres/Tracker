@@ -16,11 +16,39 @@ final class NewHabitViewController: UIViewController {
     private var cancelButton = UIButton()
     private var createButton = UIButton()
     
-    
     //MARK: Services
     var onSave: ((Tracker, String) -> Void)?
     private let scheduleViewController = ScheduleViewController()
     private var selectedDays: [Weekday] = []
+    private let emojies = [
+        "🙂", "😻", "🌺", "🐶", "❤️", "😱", "😇", "😡", "🥶", "🤔", "🙌", "🍔",
+        "🥦", "🏓", "🥇", "🎸", "🏝", "😪"
+    ]
+    private var colors = [
+        UIColor(named: "Color selection 1"),
+        UIColor(named: "Color selection 2"),
+        UIColor(named: "Color selection 3"),
+        UIColor(named: "Color selection 4"),
+        UIColor(named: "Color selection 5"),
+        UIColor(named: "Color selection 6"),
+        UIColor(named: "Color selection 7"),
+        UIColor(named: "Color selection 8"),
+        UIColor(named: "Color selection 9"),
+        UIColor(named: "Color selection 10"),
+        UIColor(named: "Color selection 11"),
+        UIColor(named: "Color selection 12"),
+        UIColor(named: "Color selection 13"),
+        UIColor(named: "Color selection 14"),
+        UIColor(named: "Color selection 15"),
+        UIColor(named: "Color selection 16"),
+        UIColor(named: "Color selection 17"),
+        UIColor(named: "Color selection 18")
+    ]
+    
+    private var collectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: UICollectionViewFlowLayout()
+    )
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +72,7 @@ final class NewHabitViewController: UIViewController {
         addTableView()
         addCancelButton()
         addCreateButton()
+        addCollectionView()
     }
     
     private func addTitleLabel() {
@@ -110,7 +139,7 @@ final class NewHabitViewController: UIViewController {
         cancelButton.addTarget(self, action: #selector (didTapCancelButton), for: UIControl.Event.touchUpInside)
         NSLayoutConstraint.activate([
             cancelButton.heightAnchor.constraint(equalToConstant: 60),
-            cancelButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            cancelButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 852),
             cancelButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             cancelButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor, constant: -4)
         ])
@@ -131,7 +160,7 @@ final class NewHabitViewController: UIViewController {
         createButton.addTarget(self, action: #selector (didTapCreateButton), for: UIControl.Event.touchUpInside)
         NSLayoutConstraint.activate([
             createButton.heightAnchor.constraint(equalToConstant: 60),
-            createButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            createButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 852),
             createButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             createButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor, constant: 4)
         ])
@@ -158,6 +187,22 @@ final class NewHabitViewController: UIViewController {
         view.addGestureRecognizer(tapGesture)
     }
     
+    private func addCollectionView() {
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(collectionView)
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 336),
+            collectionView.heightAnchor.constraint(equalToConstant: 476),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 18),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -18),
+        ])
+
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(OptionsCell.self, forCellWithReuseIdentifier: "Options cell")
+        collectionView.register(OptionsSupplementaryView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "Header")
+    }
+    
     @objc private func dismissKeyboard() {
         view.endEditing(true)
     }
@@ -168,7 +213,7 @@ final class NewHabitViewController: UIViewController {
         let newTracker = Tracker(
             id: UUID(),
             name: name,
-            color: .selection5,
+            color: .colorSelection5,
             emoji: "😪",
             schedule: selectedDays
         )
@@ -227,4 +272,86 @@ extension NewHabitViewController: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
         updateCreateButton()
     }
+}
+
+extension NewHabitViewController: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        2
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
+        18
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Options cell", for: indexPath) as! OptionsCell
+        if indexPath.section == 0 {
+            cell.emojiLabel.text = emojies[indexPath.row]
+        } else {
+            cell.colorView.backgroundColor = colors[indexPath.row]
+        }
+        cell.layer.cornerRadius = 16
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        var id: String
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            id = "Header"
+        default:
+            id = ""
+        }
+        let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: id, for: indexPath) as! OptionsSupplementaryView
+        if indexPath.section == 0 {
+            view.titleLabel.text = "Emoji"
+        } else {
+            view.titleLabel.text = "Цвет"
+        }
+        return view
+    }
+}
+
+extension NewHabitViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as? OptionsCell
+        if indexPath.section == 0 {
+            cell?.backgroundColor = .background
+        } else {
+            cell?.makeFramed(cellColor: (cell?.colorView.backgroundColor) ?? .background)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as? OptionsCell
+        if indexPath.section == 0 {
+            cell?.backgroundColor = nil
+        } else {
+            cell?.deleteFrame()
+        }
+    }
+}
+
+extension NewHabitViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        return CGSize(width: 52, height: 52)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        CGSize(width: collectionView.frame.width, height: 82)
+       }
 }
